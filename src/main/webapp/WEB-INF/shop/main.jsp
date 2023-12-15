@@ -1,5 +1,5 @@
+<%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
-<html lang="kr">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,29 +10,47 @@
             height: 200px;
             background: #aaa;
         }
+        .joinbox{
+            justify-content: right;
+            text-align: right;
+            margin-right: 20px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+        .joinbox a {
+            color: dodgerblue;
+            text-decoration: none;
+            margin-left: 5px;
+        }
     </style>
 </head>
 <body>
-
-<div class="p-5 bg-primary text-white text-center">
-    <h1>My First Bootstrap 5 Page</h1>
-    <p>Resize this responsive page to see the effect!</p>
+<div class="joinbox">
+    <a href="join">회원가입</a>
+    <a href="login">로그인</a>
+</div>
+<div class="p-5 text-center">
+    <h1>JPA SHOP</h1>
+    <p>JAVA, JSP, JPA, Session을 사용한 간단한 쇼핑몰 사이트</p>
 </div>
 
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
     <div class="container-fluid">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link active" href="#">Active</a>
+                <a class="nav-link" href="#">베스트</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
+                <a class="nav-link" href="#">신상품</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
+                <a class="nav-link" href="#">공지사항</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link disabled" href="#">Disabled</a>
+                <a class="nav-link" href="#">QNA</a>
+            </li>ㄴ
+            <li class="nav-item">
+                <a class="nav-link disabled" href="#">회사위치</a>
             </li>
         </ul>
     </div>
