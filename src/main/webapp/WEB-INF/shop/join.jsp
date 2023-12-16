@@ -29,7 +29,8 @@
         contentType:'application/json; charset=UTF-8',
         data:JSON.stringify(formData),
         success:function() {
-          alert("회원가입 성공! 메인화면으로 이동합니다.");
+          alert("회원가입 성공! 로그인 화면으로 이동합니다.");
+          location.href="login.jsp";
         }
       });
     }
@@ -49,8 +50,8 @@
       <div class="invalid-feedback">아이디를 입력해주세요.</div>
     </div>
     <div class="mb-3 mt-3">
-      <label for="id" class="form-label">이메일:</label>
-      <input type="text" class="form-control" id="id" placeholder="예 ) example@gmail.com" name="id" required>
+      <label for="id" class="form-label">아이디:</label>
+      <input type="text" class="form-control" id="id" placeholder="예 ) example" name="id" required>
       <div class="valid-feedback"></div>
       <div class="invalid-feedback">아이디를 입력해주세요.</div>
     </div>
