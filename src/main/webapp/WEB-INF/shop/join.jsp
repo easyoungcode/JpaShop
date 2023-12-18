@@ -17,6 +17,8 @@
   <script>
     // form 안에 있는 데이터를 json으로 변경해서 post로 보내기
     function signUp() {
+      if(chkPW()===true) {
+
       var formData = $("#join").serializeArray().reduce(function(obj, item) {
         obj[item.name] = item.value;
         return obj;
@@ -30,9 +32,34 @@
         data:JSON.stringify(formData),
         success:function() {
           alert("회원가입 성공! 로그인 화면으로 이동합니다.");
-          location.href="login.jsp";
+          location.href="/login";
         }
       });
+    }
+    }
+
+    // 비밀번호 유효성 검사
+    function chkPW(){
+
+      var pw = $("#password").val();
+      var num = pw.search(/[0-9]/g);
+      var eng = pw.search(/[a-z]/ig);
+      var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+
+      if(pw.length < 8 || pw.length > 20){
+
+        alert("8자리 ~ 20자리 이내로 입력해주세요.");
+        return false;
+      }else if(pw.search(/\s/) != -1){
+        alert("비밀번호는 공백 없이 입력해주세요.");
+        return false;
+      }else if(num < 0 || eng < 0 || spe < 0 ){
+        alert("비밀번호는 영문,숫자, 특수문자를 혼합하여 입력해주세요.");
+        return false;
+      }else {
+        console.log("통과");
+        return true;
+      }
     }
   </script>
 </head>
@@ -59,7 +86,7 @@
       <label for="password" class="form-label">비밀번호:</label>
       <input type="password" class="form-control" id="password" placeholder="비밀번호를 입력해주세요" name="password" required>
       <div class="valid-feedback"></div>
-      <div class="invalid-feedback">비밀번호를 입력해주세요.</div>
+      <div class="invalid-feedback">비밀번호는 영문,숫자, 특수문자를 혼합하여 8~20자 내로 입력해주세요..</div>
     </div>
     <div class="mb-3">
       <label for="phone" class="form-label">휴대폰:</label>

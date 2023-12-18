@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -31,4 +32,11 @@ public class UserController {
         }
     }
 
+    @GetMapping("/logout")
+    public String userLogout(HttpSession session) {
+        session.removeAttribute("loginCheck");
+        session.removeAttribute("id");
+        System.out.println("로그아웃 완료");
+        return "redirect:/";
+    }
 }
