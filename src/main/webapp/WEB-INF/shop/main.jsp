@@ -48,7 +48,7 @@
                 <a class="nav-link" href="#">베스트</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">신상품</a>
+                <a class="nav-link" href="/product/list/new">신상품</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">공지사항</a>
