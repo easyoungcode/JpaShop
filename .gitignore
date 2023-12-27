@@ -40,3 +40,6 @@ out/
 
 ### PROPERTIES_KEY ###
 **/resources/application-key.properties
+
+### upload File ###
+#**/main/webapp/save/**

@@ -10,25 +10,64 @@
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/js/fileNotice.js"></script>
-    <script>
-        function addProduct() {
-            var formData = $("#product-new").serializeArray().reduce(function(obj, item) {
-                obj[item.name] = item.value;
-                return obj;
-            }, {});
+<%--    <script src="/js/fileNotice.js"></script>--%>
+    <script type="text/javascript">
+        $(document).ready(function () {
+        var inputFileList = Array();     // 이미지 파일을 담아놓을 배열 (업로드 버튼 누를 때 서버에 전송할 데이터)
 
-            // ajax로 json 파싱해서 보내기
+        // 파일 선택 이벤트
+        $('input[name=productImage]').on('change', function(e) {
+            var files = e.target.files;
+            var filesArr = Array.prototype.slice.call(files);
+
+            // 업로드 된 파일 유효성 체크
+            if (filesArr.length > 3) {
+                alert("이미지는 최대 3개까지 업로드 가능합니다.");
+                $('input[name=productImage]').val();
+                return;
+            }
+
+            filesArr.forEach(function(f) {
+                inputFileList.push(f);    // 이미지 파일을 배열에 담는다.
+            });
+        });
+
+        $("#uploadBtn").on('click',function() {
+        // function upload() {
+            console.log("inputFileList: " + inputFileList);
+            // var file = $('#productImage')[0].files[0];
+            var formData = new FormData();
+            // formData.append('productImg', file);
+            for (let i = 0; i < inputFileList.length; i++) {
+                formData.append("productImg", inputFileList[i]);  // 배열에서 이미지들을 꺼내 폼 객체에 담는다.
+            }
+
+            var data = {
+                productName: $('#productName').val(),
+                price: $('#price').val(),
+                inventory: $('#inventory').val()
+            };
+            formData.append("productInfo", new Blob([JSON.stringify(data)], {type: "application/json"}));
+
             $.ajax({
-                url:'/product/new',
-                type:'POST',
-                contentType:'application/json; charset=UTF-8',
-                data:JSON.stringify(formData),
-                success:function() {
-                    location.href="/product/list/new";
+                url: "/product/new",
+                method: "post",
+                data: formData,
+                contentType: false,
+                processData: false,
+                cache: false,
+                enctype: 'multipart/form-data',
+                dataType: "json",
+                success: function(result) {
+                    // 성공 시 처리
+                },
+                error: function (xhr, status, error) {
+                    // 실패 시 처리
                 }
             });
-        }
+        // }
+        });
+        });
     </script>
 </head>
 <body>
@@ -36,7 +75,7 @@
     <h3>상품 등록</h3>
     <p>아래 정보를 모두 작성해주세요.</p>
 
-    <form id="product-new" class="was-validated">
+    <form id="product-new" class="was-validated" method="post" enctype="multipart/form-data">
         <div class="mb-3 mt-3">
             <label for="productName" class="form-label">상품명:</label>
             <input type="text" class="form-control" id="productName" placeholder="예 ) 텀블러" name="productName" required>
@@ -56,8 +95,8 @@
             <div class="invalid-feedback">재고 수량을 입력해주세요</div>
         </div>
         <div class="mb-3">
-            <label for="productImg" class="form-label">상품 사진:</label>
-            <input type="file" class="form-control" id="productImg" name="productImg" required multiple>
+            <label for="productImage" class="form-label">상품 사진:</label>
+            <input type="file" class="form-control" id="productImage" name="productImage" required multiple>
             <div class="valid-feedback"></div>
             <div class="invalid-feedback">상품 이미지를 업로드해주세요</div>
         </div>
@@ -69,7 +108,7 @@
             </div>
             <ul id="fileList"></ul>
         </div>
-        <button type="button" onclick="addProduct();" class="btn btn-primary">상품등록</button>
+        <button type="button" id="uploadBtn" class="btn btn-primary">상품등록</button>
     </form>
 </div>
 </body>
