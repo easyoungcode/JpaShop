@@ -60,6 +60,13 @@
                 dataType: "json",
                 success: function(result) {
                     // 성공 시 처리
+                    if(result===1) {
+                        alert("등록 성공");
+                        location.href='/product/list/new';
+                    } else {
+                        alert("현재 요청량이 많아 처리가 어렵습니다. 잠시 후 다시 시도해주세요.");
+                    }
+
                 },
                 error: function (xhr, status, error) {
                     // 실패 시 처리

@@ -23,9 +23,14 @@
       type:'POST',
       contentType:'application/json; charset=UTF-8',
       data:JSON.stringify(formData),
-      success:function() {
-        alert("로그인 성공! 메인화면으로 이동합니다.");
-        location.href="/";
+      success:function(result) {
+        if(result===1) {
+          console.log(result);
+          alert("로그인 성공! 메인화면으로 이동합니다.");
+          location.href="/";
+        } else if(result===0){
+          alert("아이디나 비밀번호가 맞지 않습니다. 다시 시도해주세요.");
+        }
       }
     });
   }

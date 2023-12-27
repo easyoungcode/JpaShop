@@ -6,11 +6,10 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
@@ -21,22 +20,25 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public void userLogin(@RequestBody LoginRequestDto loginRequestDto, HttpSession session) {
+    public int userLogin(@RequestBody LoginRequestDto loginRequestDto, HttpSession session) {
         HttpStatusCode httpStatusCode = userService.login(loginRequestDto);
         if (httpStatusCode.is2xxSuccessful()) {
             session.setAttribute("loginCheck", true);
             session.setAttribute("id", loginRequestDto.getId());
             System.out.println("Session ID: " + loginRequestDto.getId());
+            return 1;
         } else {
             System.out.println("로그인 실패");
+            return 0;
         }
     }
 
     @GetMapping("/logout")
-    public String userLogout(HttpSession session) {
+    public ModelAndView userLogout(HttpSession session) {
         session.removeAttribute("loginCheck");
         session.removeAttribute("id");
         System.out.println("로그아웃 완료");
-        return "redirect:/";
+        ModelAndView mv= new ModelAndView("main");
+        return mv;
     }
 }
