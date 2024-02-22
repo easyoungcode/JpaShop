@@ -1,8 +1,7 @@
 package boot.jpa.shop.product;
 
 import boot.jpa.shop.domain.Product;
-import boot.jpa.shop.domain.ProductImg;
-import boot.jpa.shop.product.dto.InsertProductImgRequestDto;
+import boot.jpa.shop.domain.ProductFile;
 import boot.jpa.shop.product.dto.InsertProductRequestDto;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +11,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,10 +18,10 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ProductService {
     private final ProductRepository productRepository;
-    private final ProductImgRepository productImgRepository;
+    private final ProductFileRepository productFileRepository;
 
     @Transactional
-    public HttpStatusCode insertProduct(InsertProductRequestDto insertProductRequestDto, List<MultipartFile> productImage, String path) {
+    public HttpStatusCode insertProduct(InsertProductRequestDto insertProductRequestDto, List<MultipartFile> productFiles, String path) {
 
         // 게시글 저장
         Product product = Product.builder()
@@ -36,17 +34,17 @@ public class ProductService {
         StringBuilder uuid = new StringBuilder();
         String ext;
         try {
-            for(MultipartFile multipartFile:productImage) {
+            for(MultipartFile multipartFile:productFiles) {
                 uuid.append(UUID.randomUUID());
                 ext = extractExt(multipartFile.getOriginalFilename());
                 multipartFile.transferTo(new File(path + "/" + uuid + "." + ext));
 
                 // 게시글 이미지 저장
-                ProductImg productImg = ProductImg.builder()
-                        .productImgName(uuid.toString() + "." + ext)
+                ProductFile productFile = ProductFile.builder()
+                        .productFileName(uuid.toString() + "." + ext)
                         .product(product)
                         .build();
-                productImgRepository.save(productImg);
+                productFileRepository.save(productFile);
             }
                 return HttpStatusCode.valueOf(202);
             } catch (IOException | IllegalStateException e) {
@@ -59,5 +57,11 @@ public class ProductService {
     private String extractExt(String originalFilename) {
         int pos = originalFilename.lastIndexOf(".");
         return originalFilename.substring(pos + 1);
+    }
+
+    // 조회
+    List<Product> findAllProduct() {
+        List<Product> productList = productRepository.findAll();
+        return productList;
     }
 }

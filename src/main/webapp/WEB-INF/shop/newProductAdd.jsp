@@ -37,9 +37,9 @@
             console.log("inputFileList: " + inputFileList);
             // var file = $('#productImage')[0].files[0];
             var formData = new FormData();
-            // formData.append('productImg', file);
+            // formData.append('productFile', file);
             for (let i = 0; i < inputFileList.length; i++) {
-                formData.append("productImg", inputFileList[i]);  // 배열에서 이미지들을 꺼내 폼 객체에 담는다.
+                formData.append("productFile", inputFileList[i]);  // 배열에서 이미지들을 꺼내 폼 객체에 담는다.
             }
 
             var data = {

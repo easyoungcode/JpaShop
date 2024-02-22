@@ -42,4 +42,11 @@ out/
 **/resources/application-key.properties
 
 ### upload File ###
-#**/main/webapp/save/**
+**/main/webapp/save/**.jpg
+**/main/webapp/save/**.png
+**/main/webapp/save/**.jpeg
+**/main/webapp/save/**.pdf
+**/main/webapp/save/**.gif
+**/main/webapp/save/**.docx
+**/main/webapp/save/**.xlxs
+**/main/webapp/save/**.zip
