@@ -5,18 +5,22 @@ import boot.jpa.shop.product.dto.InsertProductImgRequestDto;
 import boot.jpa.shop.product.dto.InsertProductRequestDto;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.awt.*;
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@Log4j2
 public class ProductController {
     private final ProductService productService;
 
@@ -34,8 +38,14 @@ public class ProductController {
         }
     }
 
-    @GetMapping(value = "/product/new")
-    public ResponseEntity<List<Product>> allNewProduct() {
-        return ResponseEntity.ok(productService.findAllProduct());
+    // 상품 리스트
+    @GetMapping("/product/list/new")
+    public ModelAndView allNewProduct() {
+        ModelAndView modelAndView = new ModelAndView();
+        List<Product> productList = productService.findAllProduct();
+        log.debug("list: {}", productList);
+        modelAndView.addObject("productList", productList);
+        modelAndView.setViewName("newProduct");
+        return modelAndView;
     }
 }

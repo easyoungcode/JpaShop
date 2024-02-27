@@ -19,11 +19,11 @@ public class MainController {
     @GetMapping("/login")
     public String loginForm() { return "login"; }
 
-    // 신상품 리스트
+    /* 신상품 리스트
     @GetMapping("/product/list/new")
     public String newProductList() { return "newProduct"; }
 
-    // 신상품 폼
+    /* 신상품 폼
     @GetMapping("/product/new")
-    public String newProductForm() { return "newProductAdd"; }
+    public String newProductForm() { return "newProductAdd"; }*/
 }

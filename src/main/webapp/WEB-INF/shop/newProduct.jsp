@@ -13,6 +13,27 @@
     </script>
 </head>
 <body>
-<button type="button" onclick="location.href='/product/new'">상품 등록</button>
+<div class="container mt-3">
+<button type="button" onclick="location.href='/product/new'" class="btn btn-primary" style="justify-items: right;">상품 등록</button>
+<table class="table table-hover">
+    <tr>
+<%--        <c:if test=""></c:if>--%>
+        <th>상품번호</th>
+        <th>상품명</th>
+        <th>가격</th>
+        <th>좋아요</th>
+        <th>등록일자</th>
+    </tr>
+    <c:forEach var="product" items="${productList}" varStatus="i">
+    <tr>
+        <td>${i.index + 1}</td>
+        <td>${product.productName}</td>
+        <td>${product.price}</td>
+        <td>${product.likes}</td>
+        <td>${product.createdAt}</td>
+    </tr>
+    </c:forEach>
+</table>
+</div>
 </body>
 </html>
